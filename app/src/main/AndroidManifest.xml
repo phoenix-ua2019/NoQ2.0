@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.noq">
-
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    package="ua.lviv.iot.phoenix.noq">
 
     <application
         android:allowBackup="true"
@@ -21,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ListOfCafes"/>
+        <activity android:name=".ListOfOrders" />
+        <activity android:name=".ListOfMeals"  android:configChanges="orientation|screenSize"/>
+        <activity android:name=".QuantityActivity" />
+        <activity android:name=".MyOrdersActivity" />
+        <activity android:name=".TimeActivity" />
     </application>
 
 </manifest>

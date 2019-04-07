@@ -1,68 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cafe_list_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="16dp">
-
-
-
-    <TextView
-        android:id="@+id/name_of_cafe"
-        android:layout_width="wrap_content"
-        android:layout_height="14dp"
-        tools:text="Pizza"
-        android:textColor="#000"
-        android:textSize="16sp"
-        android:gravity="top"/>
+    android:orientation="vertical"
+    android:paddingLeft="4dp"
+    android:paddingTop="8dp"
+    tools:background="@drawable/gradient_main_background">
 
     <TextView
-        android:id="@+id/location_of_cafe"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_below="@+id/name_of_cafe"
+
+        android:id="@+id/meal_name_text_view"
+        style="@style/TextStyle"
+        android:layout_width="200dp"
+        android:paddingLeft="32dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="8dp"
         android:layout_centerVertical="true"
-        android:textColor="#45000000"
-        android:textSize="7sp"
-        android:gravity="center"
-        tools:text="вул умлумав"/>
-    
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        tools:text="Meal's Name" />
+
     <TextView
-        android:id="@+id/price"
+
+        style="@style/TextStyle"
+        android:id="@+id/price_type_text_view"
+        android:layout_width="80dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/meal_checkbox"
+        android:textSize="20sp"
+        tools:text="$$$" />
+
+    <CheckBox
+
+        android:id="@+id/meal_checkbox"
         android:layout_width="wrap_content"
-        android:layout_height="14dp"
-        android:layout_below="@+id/location_of_cafe"
-        android:textSize="7sp"
-        tools:text="234r"
-        android:gravity="bottom"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="30dp"
+        android:width="45dp"
+        android:height="45dp"
+        android:focusable="false"
+        android:theme="@style/CheckBoxStyle"
+        android:layout_centerVertical="true"/>
 
     <TextView
-        android:id="@+id/waiting_time"
-        android:layout_width="wrap_content"
-        android:layout_height="14dp"
-        tools:text="час очікування"
-        android:layout_below="@+id/location_of_cafe"
-        android:textSize="7sp"
-        android:gravity="bottom"
-        android:paddingLeft="54dp"/>
 
-    <ImageView
-        android:id="@+id/photo_of_cafe"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        tools:src="@drawable/photo"
-        android:layout_alignParentRight="true"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="#12000000"
-        android:layout_below="@+id/photo_of_cafe"
-        android:textSize="7sp"/>
-
+        android:id="@+id/line1"
+        style="@style/WhiteLine"
+        android:layout_below="@+id/one"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
