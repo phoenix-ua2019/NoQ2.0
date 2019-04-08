@@ -25,7 +25,7 @@ public class MyOrdersActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final String userName = extras.getString("UserName");
         final String orderTime = extras.getString("order time");
-        Cafe cafe = new Cafe(extras.getString("cafe"));
+        Cafe cafe = extras.getParcelable("cafe");
         meals = cafe.getCafeMeals();
 
         Date currentDate = Calendar.getInstance().getTime();

@@ -25,7 +25,7 @@ public class ListOfMeals extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final String userName = extras.getString("UserName");
-        Cafe cafe = new Cafe(extras.getString("cafe"));
+        Cafe cafe = extras.getParcelable("cafe");
 
 
         meals = new ArrayList<>();
@@ -67,7 +67,7 @@ public class ListOfMeals extends AppCompatActivity {
             }
             Intent OpenQuantityActivity = new Intent(ListOfMeals.this, QuantityActivity.class);
             OpenQuantityActivity.putExtra("UserName", userName);
-            OpenQuantityActivity.putExtra("cafe", cafe.toString());
+            OpenQuantityActivity.putExtra("cafe", cafe);
             startActivity(OpenQuantityActivity);
             overridePendingTransition(R.anim.from_bottom_to_top, R.anim.from_bottom_to_top_exit);
         });

@@ -20,7 +20,7 @@ public class TimeActivity extends AppCompatActivity {
     TextView orderTime;
     Button submitTime;
 
-    final int closingHour = 23;
+    final int closingHour = 24;
     final int openingHour = 7;
     final int preparationTime = 15;
     final int minutesInHour = 60;
@@ -39,7 +39,7 @@ public class TimeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         final String userName = extras.getString("UserName");
-        Cafe cafe = new Cafe(extras.getString("cafe"));
+        Cafe cafe = extras.getParcelable("cafe");
         meals = cafe.getCafeMeals();
 
         if (isCafeOpen(floatTime.getHour(), floatTime.getMinute())){
@@ -60,11 +60,13 @@ public class TimeActivity extends AppCompatActivity {
         submitTime.setOnClickListener( (View view) -> {
             if (!checkPreparationTime(floatTime.getHour(), floatTime.getMinute())) {
                 Toast.makeText(getApplicationContext(), "Май совість, дай хоча б 15 хвилин на приготування", Toast.LENGTH_SHORT).show();
-                return;
+                //return;
+                //floatTime.setHour(floatTime.getCurrentHour() + ((floatTime.getCurrentMinute() + 15 < minutesInHour) ? 1 : 0));
+                //floatTime.setMinute((floatTime.getCurrentMinute()+15) % minutesInHour);
             }
             Intent OpenMyOrder = new Intent(TimeActivity.this, MyOrdersActivity.class);
             OpenMyOrder.putExtra("UserName", userName);
-            OpenMyOrder.putExtra("cafe", cafe.toString());
+            OpenMyOrder.putExtra("cafe", cafe);
             OpenMyOrder.putExtra("order time",String.format("%02d:%02d", floatTime.getHour(), floatTime.getMinute()));
             startActivity(OpenMyOrder);
             overridePendingTransition(R.anim.from_bottom_to_top, R.anim.from_bottom_to_top_exit);
@@ -118,7 +120,7 @@ public class TimeActivity extends AppCompatActivity {
     private boolean isCafeOpen(int orderHour, int orderMinute) {
         if (orderHour > closingHour || (orderHour == closingHour && orderMinute > 0)) {
             Toast.makeText(this, "Вибач, але кафе вже зачинено", Toast.LENGTH_SHORT).show();
-            floatTime.setHour(closingHour);
+            floatTime.setHour(closingHour % 24);
             floatTime.setMinute(0);
             return false;
         }
@@ -135,6 +137,16 @@ public class TimeActivity extends AppCompatActivity {
         int currentHour = floatTime.getCurrentHour();
         int currentMinute = floatTime.getCurrentMinute();
 
+        if ((isNearNewHour() && (orderHour == currentHour ||
+                ((orderHour == currentHour + 1) &&
+                        (orderMinute < ((currentMinute + preparationTime) % minutesInHour))
+                ))) ||
+                (orderHour == currentHour &&
+                        (orderMinute < currentMinute + preparationTime)
+                )
+        ) return false;
+        return true;
+        /*
         if (isNearNewHour() &&
                 (orderHour == currentHour ||
                         (orderHour == currentHour + 1 &&
@@ -147,6 +159,7 @@ public class TimeActivity extends AppCompatActivity {
                 orderHour == currentHour &&
                 orderMinute < currentMinute + preparationTime
         ));
+        */
     }
 
     @Override

@@ -21,7 +21,7 @@ public class QuantityActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final String userName = extras.getString("UserName");
-        Cafe cafe = new Cafe(extras.getString("cafe"));
+        Cafe cafe = extras.getParcelable("cafe");
         meals = cafe.getCafeMeals();
 
         ((ListView) findViewById(R.id.quantity_list)).setAdapter(new QuantityAdapter( this, meals));
@@ -40,7 +40,7 @@ public class QuantityActivity extends AppCompatActivity {
             cafe.setCafeMeals(meals);
             Intent OpenTimeActivity = new Intent(QuantityActivity.this, TimeActivity.class);
             OpenTimeActivity.putExtra("UserName", userName);
-            OpenTimeActivity.putExtra("cafe", cafe.toString());
+            OpenTimeActivity.putExtra("cafe", cafe);
             startActivity(OpenTimeActivity);
             overridePendingTransition(R.anim.from_bottom_to_top, R.anim.from_bottom_to_top_exit);
         });
