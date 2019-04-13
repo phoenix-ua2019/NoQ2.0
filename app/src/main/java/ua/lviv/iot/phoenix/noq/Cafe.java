@@ -1,6 +1,8 @@
 package ua.lviv.iot.phoenix.noq;
 
 import android.content.res.Resources;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.common.base.Splitter;
 import com.google.firebase.database.IgnoreExtraProperties;
@@ -11,13 +13,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @IgnoreExtraProperties
-public class Cafe {
+public class Cafe implements Parcelable {
     private String mCafeName;
     private String mCafeLocation;
     private String mCafeEmail;
     private String temp_mDrawableId;
     private int mDrawableId;
     private ArrayList<Meal> mCafeMeals;
+    public static final Parcelable.Creator<Cafe> CREATOR =
+            new Parcelable.Creator<Cafe>() {
+        @Override
+        public Cafe createFromParcel(Parcel source) {
+         return new Cafe(source);
+        }
+
+        @Override
+        public Cafe[] newArray(int size) {
+         return new Cafe[size];
+        }
+     };
 
     private static final int NO_IMAGE_PROVIDED = -1;
 
@@ -26,6 +40,11 @@ public class Cafe {
 
     Cafe (Object o) {
         this((HashMap<String, ?>) o);
+    }
+
+    Cafe (Parcel source) {
+        this(source.readString(), source.readString(), source.readString(), source.readInt(), new ArrayList());
+        source.readList(mCafeMeals, Meal.class.getClassLoader());
     }
 
     Cafe (String str) {
@@ -50,6 +69,14 @@ public class Cafe {
         mCafeMeals = (ArrayList<Meal>) tempCafeMeals.stream().map(Meal::new).collect(Collectors.toList());
     }
 
+    Cafe (String name, String location, String email, int icon, ArrayList<Meal> meals) {
+        mCafeName = name;
+        mCafeLocation = location;
+        mCafeEmail = email;
+        mDrawableId = icon;
+        mCafeMeals = meals;
+    }
+
     public Cafe setDrawable(Resources r, String name) {
         this.setDrawableId(
                 r.getIdentifier(
@@ -65,6 +92,20 @@ public class Cafe {
                 "], email=[" + mCafeEmail +
                 "], icon=[" + mDrawableId +
                 "], meals=[" + mCafeMeals;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(mCafeName);
+        out.writeString(mCafeEmail);
+        out.writeString(mCafeLocation);
+        out.writeInt(mDrawableId);
+        out.writeList(mCafeMeals);
     }
 
     public String getCafeName() {

@@ -32,14 +32,14 @@ public class QuantityAdapter extends ArrayAdapter<Meal> {
         priceTypeTextView.setText(currentMeal.getMealPrice() + " грн");
 
         final TextView quantityTextView = listItemView.findViewById(R.id.quantity_text_view);
-        quantityTextView.setText(currentMeal.getQuantity());
+        quantityTextView.setText(Integer.toString(currentMeal.getQuantity()));
 
 
         Button plusButton = listItemView.findViewById(R.id.plus_button);
         plusButton.setOnClickListener( (View v) -> {
             int quantity = currentMeal.incrementQuantity();
-            quantityTextView.setText(quantity);
-            int total = currentMeal.getMealPrice() * quantity;
+            quantityTextView.setText(Integer.toString(quantity));
+            int total = currentMeal.getMealPrice() * (quantity == 0 ? 1 : quantity);
             priceTypeTextView.setText(total + " грн");
         });
 
@@ -51,8 +51,8 @@ public class QuantityAdapter extends ArrayAdapter<Meal> {
                 Toast.makeText(getContext(), "Не можна обрати від'ємну кількість страв", Toast.LENGTH_SHORT).show();
                 return;
             }
-            quantityTextView.setText(quantity);
-            int total = currentMeal.getMealPrice() * quantity;
+            quantityTextView.setText(Integer.toString(quantity));
+            int total = currentMeal.getMealPrice() * (quantity == 0 ? 1 : quantity);
             priceTypeTextView.setText(total + " грн");
         });
 

@@ -45,7 +45,7 @@ public class ListOfCafes extends AppCompatActivity {
                 listView.setOnItemClickListener( (AdapterView<?> adapter, View view, int position, long l) -> {
                     Intent OpenMenu = new Intent(ListOfCafes.this, ListOfMeals.class);
                     OpenMenu.putExtra("UserName", userName);
-                    OpenMenu.putExtra("cafe", cafes.get(position).toString());
+                    OpenMenu.putExtra("cafe", cafes.get(position));
                     startActivity(OpenMenu);
                     overridePendingTransition(R.anim.from_bottom_to_top, R.anim.from_bottom_to_top_exit);
                 });
